@@ -1,0 +1,71 @@
+OLXCaseStudy :
+
+OLX Login:
+
+1. GET API - Getting all the users - http://localhost:9000/olx/user
+
+2. POST API - Creating a new user - http://localhost:9000/olx/user
+{
+    "firstName":"Shikha",
+    "lastName":"Gupta",
+    "userName":"shikha",
+    "password":"password@",
+    "email":"shikhagupta@gmail.com",
+    "phone":"9725380166"
+}
+
+3. DELETE API - Logs out a user - http://localhost:9000/olx/user/logout/{id}
+
+4. 
+------------------------------------------------------------------------------------------
+OLX MasterData:
+
+1. GET API - Getting all the categories - 
+
+2. GET API - Getting all the status - 
+
+
+------------------------------------------------------------------------------------------
+OLX - Advertisment - 
+
+
+
+------------------------------------------------------------------------------------------
+<!-- Dependency for Swagger API -->
+<dependency>
+	<groupId>io.springfox</groupId>
+	<artifactId>springfox-boot-starter</artifactId>
+	<version>3.0.0</version>
+</dependency>
+		
+		
+------------------------------------------------------------------------------------------
+<!-- Dependency for XML - Content Negotiation -->
+
+<dependency>
+	<groupId>com.fasterxml.jackson.dataformat</groupId>
+	<artifactId>jackson-dataformat-xml</artifactId>
+</dependency>
+
+------------------------------------------------------------------------------------------
+To Do:
+// Add the dependency in all the three files
+
+<!-- Adding Dependency for Actuators -->
+
+<dependency>
+	  <groupId>org.springframework.boot</groupId>
+	  <artifactId>spring-boot-starter-actuator</artifactId>		
+</dependency>
+
+
+For eureka server - 
+
+1/ Add the dependency of the eureka server into pom.xml
+2/ Add the configuration in the application.yml
+3 add the annotation @EnableEurekaClient
+4/ also add LoadBalanced annotation
+
+
+Exceptional Handling to be added
+Introduce Actuator in current OLX Application - day 22 - 17 - Nov see video from 1:40 for furtther information 
