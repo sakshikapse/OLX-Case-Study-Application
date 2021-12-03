@@ -23,7 +23,9 @@ import com.olx.repository.AdvertiseRepository;
 import com.olx.service.AdvertiseService;
 
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping("/olx/advertise")
 public class AdvertiseController {
@@ -37,6 +39,7 @@ public class AdvertiseController {
 	@GetMapping(value = "/", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	@ApiOperation(value = "This REST endpoint returns all advertise")
 	public List<Advertise> getAllAdvertise() {
+		log.info("Entering into Advertise controller");
 		return this.advertiseService.getAllAdvertise();
 	}
 
@@ -45,6 +48,7 @@ public class AdvertiseController {
 	@ApiOperation(value = "This REST endpoint creates a new advertisment")
 	public ResponseEntity<Advertise> createNewAdvertise(@RequestHeader("auth-token") String authToken,
 			@RequestBody Advertise advertise) {
+		log.info("Entering into create a new user controller");
 		Advertise advertiseDto = this.advertiseService.createNewAdvertise(authToken, advertise);
 		return new ResponseEntity<Advertise>(advertiseDto, HttpStatus.OK);
 	}
@@ -54,6 +58,7 @@ public class AdvertiseController {
 	@ApiOperation(value = "This REST endpoint updates the existing advertisment")
 	public ResponseEntity<Advertise> updateAdvertise(@PathVariable("id") int id, @RequestBody Advertise advertise,
 			@RequestHeader("auth-token") String authToken) {
+		log.info("Entering into updating the advertisement controller");
 		Advertise advertiseDto = this.advertiseService.updateAdvertise(id, advertise, authToken);
 		return new ResponseEntity<Advertise>(advertiseDto, HttpStatus.CREATED);
 	}
@@ -92,6 +97,7 @@ public class AdvertiseController {
 			@RequestParam("sortBy") String sortBy, @RequestParam("startIndex") int startIndex,
 			@RequestParam("records") int records) {
 
+		log.info("Entering into search filter criterion");
 		List<Advertise> advertises = this.advertiseService.getAdvertiseByFilter(searchText, category, postedBy,
 				dateCondition, onDate, fromDate, toDate, sortBy, startIndex, records);
 		return new ResponseEntity<List<Advertise>>(advertises, HttpStatus.OK);
@@ -101,6 +107,7 @@ public class AdvertiseController {
 	// 13 API
 	@GetMapping(value = "/search", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<List<Advertise>> getAdvertiseBySearch(@RequestParam("searchText") String searchText) {
+		log.info("Entering into search text controller");
 		List<Advertise> advertises = this.advertiseService.getAdvertiseBySearch(searchText);
 		return new ResponseEntity<List<Advertise>>(advertises, HttpStatus.OK);
 	}

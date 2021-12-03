@@ -18,7 +18,9 @@ import com.olx.repository.StatusRepository;
 import com.olx.service.MasterDataService;
 
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping("/olx/masterdata")
 public class MasterDataController  {
@@ -38,7 +40,7 @@ public class MasterDataController  {
 			    produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	@ApiOperation(value ="This REST endpoint returns all advertise category")
 	public ResponseEntity <List <Category>> getAllCategories(){
-		
+		 log.info("Entering into category controller");
 		 List <Category> category = this.masterDataService.getAllCategories();
 		 if(category.size()<=0) {
 			 // return new ResponseEntity(HttpStatus.NOT_FOUND);
@@ -56,7 +58,7 @@ public class MasterDataController  {
 			    produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	@ApiOperation(value ="This REST endpoint returns all advertise status")
 	public ResponseEntity <List<Status>> getAllStatus(){
-		
+		log.info("Entering into status controller");
 		List <Status> status = this.masterDataService.getAllStatus();
 		if(status.size()<=0) {
 			 // return new ResponseEntity(HttpStatus.NOT_FOUND);

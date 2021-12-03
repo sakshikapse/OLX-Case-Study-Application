@@ -23,7 +23,7 @@ public class MasterDataDelegateImpl implements MasterDataDelegate {
 		 
 		ResponseEntity<String> entityStatusText = 
 				// http://masterdata-service/olx/advertise/status/
-				this.restTemplate.getForEntity("http:/masterdata-service/olx/advertise/status/" + statusId, 
+				this.restTemplate.getForEntity("http:/API-GATEWAY/olx/masterdata/advertise/status/" + statusId, 
 				String.class);	
 		return entityStatusText.getBody();			
 	}
@@ -40,7 +40,7 @@ public class MasterDataDelegateImpl implements MasterDataDelegate {
 	public String getCategoryById(int categoryId) {			 
 		ResponseEntity<String> entityCategoryText = 
 				// http://masterdata-service/olx/advertise/category/
-				this.restTemplate.getForEntity("http://API-GATEWAY/olx/advertise/category/" + categoryId, 
+				this.restTemplate.getForEntity("http://API-GATEWAY/olx/masterdata/advertise/category/" + categoryId, 
 				String.class);	
 		return entityCategoryText.getBody();			
 	}

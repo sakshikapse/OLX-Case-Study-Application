@@ -3,11 +3,11 @@ server:
   
 spring:  application:    name: configuration-server
     
-#  cloud:
-#      config:
-#        server:
-#          git:
-#            uri: https://github.com/sakshikapse07/olx-config
-#            default-label: main
-#            username: sakshikapse07
-#            clone-on-start: true
+  cloud:
+      config:
+        server:
+          git:
+            uri: https://github.com/sakshikapse/olx-config
+            default-label: main
+            username: sakshikapse
+            clone-on-start: true
