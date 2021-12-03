@@ -21,13 +21,12 @@ public interface AdvertiseService {
 	public Advertise getAdvertiseById(String authToken, int advertiseId);
 	
 	public List<Advertise> getAllAdvertisesByUser(String authToken);
-	
-	public List<Advertise> getAdvertiseByFilter(String searchText, int category, int postedBy, String dateCondition,
-			LocalDate onDate, LocalDate fromDate, LocalDate toDate, String sortBy, int startIndex, int records);
-	
-	
 
-   public List<Advertise> getAdvertiseBySearch(String searchText);
+
+    public List<Advertise> getAdvertiseBySearch(String searchText);
    
-   public Advertise getAdvertiseByUserById(String authToken, int id);
+    public Advertise getAdvertiseByUserById(String authToken, int id);
+ 
+    public List<Advertise> getAdvertiseByFilter(String searchText, int category, String postedBy, String dateCondition,
+		LocalDate onDate, LocalDate fromDate, LocalDate toDate, String sortBy, int startIndex, int records);
 }

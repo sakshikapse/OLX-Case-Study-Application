@@ -12,6 +12,9 @@ import com.olx.entity.UserEntity;
 import com.olx.repository.UserRepository;
 import com.olx.security.JwtUtil;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService{
 
@@ -25,22 +28,26 @@ public class UserServiceImpl implements UserService{
 	ModelMapper modelMapper;
 	
 	public User createNewUser(User user) {
+		        log.info("Entered into creating a new user service ...");
 				UserEntity userEntity = this.modelMapper.map(user, UserEntity.class);
 				userEntity.setActive(true);
 				userEntity.setRoles("USER");
 				userEntity = this.userRepository.save(userEntity);
 				// Converting the Stock entity back into the DTO object
 				User userDto = this.modelMapper.map(userEntity, User.class);
+				log.info("Created a new user");
 				return userDto;
 	}
 	
 	
 	@Override
 	public User getUser(String authToken) {	
+		log.info("Entered into the service of getting user by auth token");
 		String strArr[] = authToken.split(" ");
 		String token = strArr[1];
 		System.out.println(token);
 		String username =new  JwtUtil().extractUsername(token);
+		log.info("Extracting the username");
 		System.out.println(username);
 		UserEntity userEntity = userRepository.findBySingleUsername(username);
 		
@@ -51,7 +58,7 @@ public class UserServiceImpl implements UserService{
     	//	}
 		
 		User userDto = this.modelMapper.map(userEntity, User.class);
-		// log.info("Successfully fetched all the records");
+		log.info("Successfully fetched the user record");
 		return userDto;
 	
 	}

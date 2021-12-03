@@ -24,130 +24,106 @@ import com.olx.service.AdvertiseService;
 
 import io.swagger.annotations.ApiOperation;
 
-
 @RestController
 @RequestMapping("olx")
 public class AdvertiseController {
 
 	@Autowired
-    private AdvertiseRepository advertiseRepository;
-	
+	private AdvertiseRepository advertiseRepository;
+
 	@Autowired
 	private AdvertiseService advertiseService;
-	
-	
-	@GetMapping(value="/advertise", 
-			    produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-	@ApiOperation(value ="This REST endpoint returns all advertise")
-	public List<Advertise> getAllAdvertise(){
+
+	@GetMapping(value = "/advertise", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+	@ApiOperation(value = "This REST endpoint returns all advertise")
+	public List<Advertise> getAllAdvertise() {
 		return this.advertiseService.getAllAdvertise();
 	}
-	
-	
-	
-	// 7 API - Creates a new user
-	@PostMapping(value="/advertise", 
-			     produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
-			     consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-	@ApiOperation(value ="This REST endpoint creates a new advertisment")
-	// You have to pass this authToken in service layer
-	public ResponseEntity<Advertise> createNewAdvertise(@RequestHeader("auth-token") String authToken, 
-	                                                    @RequestBody Advertise advertise){
-		Advertise advertiseDto = this.advertiseService.createNewAdvertise(authToken, advertise);
-		return new ResponseEntity<Advertise>(advertiseDto ,HttpStatus.OK);
-	}
-	
-	
-	
-	// 8 API - Updating the advertisement
-	@PutMapping(value="/advertise/{id}", 
-			    consumes= { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
-			    produces= { MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
-	@ApiOperation(value ="This REST endpoint updates the existing advertisment")
-	public ResponseEntity<Advertise> updateAdvertise(@PathVariable("id") int id, 
-			                                         @RequestBody Advertise advertise, 
-			                                         @RequestHeader("auth-token") String authToken){
-		Advertise advertiseDto = this.advertiseService.updateAdvertise(id,advertise,authToken);
-		return new ResponseEntity<Advertise>(advertiseDto,HttpStatus.CREATED);
-	}
-	
 
-	
-	// 9 API
-	@GetMapping(value="/user/advertise",
-			 produces= { MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
-	@ApiOperation(value ="This REST endpointreads all the advertisement posted by logged in user")
-	public ResponseEntity<List<Advertise>> getAllAdvertisesByUser(@RequestHeader("auth-token") String authToken){
-		return new ResponseEntity<List<Advertise>>(this.advertiseService.getAllAdvertisesByUser(authToken),HttpStatus.OK);
+	// 7 API - Creates a new user
+	@PostMapping(value = "/advertise", produces = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE }, consumes = { MediaType.APPLICATION_JSON_VALUE,
+					MediaType.APPLICATION_XML_VALUE })
+	@ApiOperation(value = "This REST endpoint creates a new advertisment")
+	// You have to pass this authToken in service layer
+	public ResponseEntity<Advertise> createNewAdvertise(@RequestHeader("auth-token") String authToken,
+			@RequestBody Advertise advertise) {
+		Advertise advertiseDto = this.advertiseService.createNewAdvertise(authToken, advertise);
+		return new ResponseEntity<Advertise>(advertiseDto, HttpStatus.OK);
 	}
-	
-	
-	
-	
-	// 10 API 
-	@GetMapping(value="/user/advertise/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Advertise> getAdvertiseByUserById(@RequestHeader("auth-token") String authToken,@PathVariable("id") int id){
+
+	// 8 API - Updating the advertisement
+	@PutMapping(value = "/advertise/{id}", consumes = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE,
+					MediaType.APPLICATION_XML_VALUE })
+	@ApiOperation(value = "This REST endpoint updates the existing advertisment")
+	public ResponseEntity<Advertise> updateAdvertise(@PathVariable("id") int id, @RequestBody Advertise advertise,
+			@RequestHeader("auth-token") String authToken) {
+		Advertise advertiseDto = this.advertiseService.updateAdvertise(id, advertise, authToken);
+		return new ResponseEntity<Advertise>(advertiseDto, HttpStatus.CREATED);
+	}
+
+	// 9 API
+	@GetMapping(value = "/user/advertise", produces = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
+	@ApiOperation(value = "This REST endpointreads all the advertisement posted by logged in user")
+	public ResponseEntity<List<Advertise>> getAllAdvertisesByUser(@RequestHeader("auth-token") String authToken) {
+		return new ResponseEntity<List<Advertise>>(this.advertiseService.getAllAdvertisesByUser(authToken),
+				HttpStatus.OK);
+	}
+
+	// 10 API
+	@GetMapping(value = "/user/advertise/{id}", produces = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
+	public ResponseEntity<Advertise> getAdvertiseByUserById(@RequestHeader("auth-token") String authToken,
+			@PathVariable("id") int id) {
 		Advertise advertise = this.advertiseService.getAdvertiseByUserById(authToken, id);
 		return new ResponseEntity<Advertise>(advertise, HttpStatus.OK);
 	}
-	
-	
-	
-	// 11 API - Deleting specific 
-	@DeleteMapping(value="/user/advertise/{id}")
-	@ApiOperation(value ="This REST endpoint deletes the specific advertisement posted by logged in user")
-	public boolean deleteAdvertiseById(@PathVariable("id") int advertiseId, @RequestHeader("auth-token") String authToken){
+
+	// 11 API - Deleting specific
+	@DeleteMapping(value = "/user/advertise/{id}")
+	@ApiOperation(value = "This REST endpoint deletes the specific advertisement posted by logged in user")
+	public boolean deleteAdvertiseById(@PathVariable("id") int advertiseId,
+			@RequestHeader("auth-token") String authToken) {
 		return advertiseService.deleteAdvertiseById(advertiseId, authToken);
 	}
+
 	
 	
-	
-	
-	//12 API
-	@GetMapping(value="/advertise/search/filtercriteria",
-			    produces = MediaType.APPLICATION_JSON_VALUE)
-	@ApiOperation("This REST endpoint is  will give advertise based on different filter criteria")
+	// 12 API
+	@GetMapping(value = "/search/filtercriteria", produces = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
+	@ApiOperation(value = "This REST End Point API will give Advertise based on filterCriteria from Database")
 	public ResponseEntity<List<Advertise>> getAdvertiseByFilter(@RequestParam("searchText") String searchText,
-			@RequestParam("category") int category,
-			@RequestParam("postedBy") int postedBy,
-			@RequestParam("dateCondition") String dateCondition,
-			@RequestParam("onDate") LocalDate onDate,
-			@RequestParam("fromDate") LocalDate fromDate,
-			@RequestParam("toDate") LocalDate toDate,
-			@RequestParam("sortBy") String sortBy,
-			@RequestParam("startIndex") int startIndex,
-			@RequestParam("records") int records){
-		List<Advertise> advertises = this.advertiseService.getAdvertiseByFilter(searchText,
-				category,
-				postedBy,
-				dateCondition,
-				onDate,
-				fromDate,
-				toDate,
-				sortBy,
-				startIndex,
-				records);
-       return new ResponseEntity<List<Advertise>>(advertises,HttpStatus.OK);
+			@RequestParam("category") int category, @RequestParam("postedBy") String postedBy,
+			@RequestParam("dateCondition") String dateCondition, @RequestParam("onDate") LocalDate onDate,
+			@RequestParam("fromDate") LocalDate fromDate, @RequestParam("toDate") LocalDate toDate,
+			@RequestParam("sortBy") String sortBy, @RequestParam("startIndex") int startIndex,
+			@RequestParam("records") int records) {
+
+		List<Advertise> advertises = this.advertiseService.getAdvertiseByFilter(searchText, category, postedBy,
+				dateCondition, onDate, fromDate, toDate, sortBy, startIndex, records);
+		return new ResponseEntity<List<Advertise>>(advertises, HttpStatus.OK);
+
 	}
-	
-	
-	
-	
+
 	// 13 API
-	@GetMapping(value="/advertise/search", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Advertise>> getAdvertiseBySearch(@RequestParam("searchText") String searchText){
+	@GetMapping(value = "/advertise/search", 
+			produces = { MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE })
+	public ResponseEntity<List<Advertise>> getAdvertiseBySearch(@RequestParam("searchText") String searchText) {
 		List<Advertise> advertises = this.advertiseService.getAdvertiseBySearch(searchText);
-		return new ResponseEntity<List<Advertise>>(advertises,HttpStatus.OK);
+		return new ResponseEntity<List<Advertise>>(advertises, HttpStatus.OK);
 	}
-	
-	
+
 	// 14 API
-	@GetMapping(value="/advertise/{id}",
-		    produces ={ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    @ApiOperation(value ="This REST endpoints gives advertisement details based on advertisment id")
-    public ResponseEntity<Advertise> getAdvertiseById(@RequestHeader("auth-token") String authToken, @PathVariable("id") int advertiseId){
+	@GetMapping(value = "/advertise/{id}",  
+			    produces = { MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE })
+	@ApiOperation(value = "This REST endpoints gives advertisement details based on advertisment id")
+	public ResponseEntity<Advertise> getAdvertiseById(@RequestHeader("auth-token") String authToken,
+			@PathVariable("id") int advertiseId) {
 		Advertise advertise = this.advertiseService.getAdvertiseById(authToken, advertiseId);
-		return new ResponseEntity<Advertise>(advertise,HttpStatus.OK);
+		return new ResponseEntity<Advertise>(advertise, HttpStatus.OK);
 	}
 
 }

@@ -173,38 +173,7 @@ public class AdvertiseServiceImpl implements AdvertiseService {
 		return advertiseDtoList;
 	}
 
-	@Override
-	public List<Advertise> getAdvertiseByFilter(String searchText, int category, int postedBy, String dateCondition,
-			LocalDate onDate, LocalDate fromDate, LocalDate toDate, String sortBy, int startIndex, int records) {
-
-		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-		CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(AdvertiseEntity.class);
-
-		Root<AdvertiseEntity> rootEntity = criteriaQuery.from(AdvertiseEntity.class);
-
-		Predicate finalPredicate = null;
-
-		if (searchText != null && !"".equals(searchText)) {
-			Predicate predicateTitle = criteriaBuilder.like(rootEntity.get("title"), searchText);
-			finalPredicate = criteriaBuilder.and(predicateTitle);
-			Predicate predicateDescription = criteriaBuilder.like(rootEntity.get("description"), searchText);
-			finalPredicate = criteriaBuilder.and(predicateDescription);
-		}
-		Predicate predicateCategory = criteriaBuilder.like(rootEntity.get("categoryId"), searchText);
-		finalPredicate = criteriaBuilder.and(predicateCategory);
-
-		// if(postedBy != null && !"".equals(postedBy)) {
-		// Predicate predicatePostedBy =
-		// criteriaBuilder.like(rootEntity.get("postBy"),postedBy);
-		// finalPredicate = criteriaBuilder.and(predicatePostedBy);
-		// }
-
-		criteriaQuery.where(finalPredicate);
-		TypedQuery<AdvertiseEntity> query = entityManager.createQuery(criteriaQuery);
-		List<AdvertiseEntity> advertiseEntityList = query.getResultList();
-
-	}
-
+	
 	@Override
 	public List<Advertise> getAdvertiseBySearch(String searchText) {
 		List<AdvertiseEntity> advertiseEntityList = this.advertiseRepository.findBySearch(searchText);
@@ -226,6 +195,43 @@ public class AdvertiseServiceImpl implements AdvertiseService {
 		throw new InvalidAdvertiseIdException(" " + id);
 	}
 
+	
+	
+	@Override
+	public List<Advertise> getAdvertiseByFilter(String searchText, int category, String postedBy, String dateCondition,
+			LocalDate onDate, LocalDate fromDate, LocalDate toDate, String sortBy, int startIndex, int records) {
+		
+		
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(AdvertiseEntity.class);
+		
+		 Root<AdvertiseEntity> rootEntity = criteriaQuery.from(AdvertiseEntity.class);
+		 
+		 Predicate finalPredicate = null;
+		 
+		 if(searchText != null && !"".equals(searchText)) {
+			 Predicate predicateTitle = criteriaBuilder.like(rootEntity.get("title"),searchText);
+			 finalPredicate = criteriaBuilder.and(predicateTitle);			 
+		     Predicate predicateDescription = criteriaBuilder.like(rootEntity.get("description"),searchText);
+		     finalPredicate = criteriaBuilder.and(predicateDescription);
+		 }
+		 Predicate predicateCategory = criteriaBuilder.like(rootEntity.get("categoryId"),searchText);
+	     finalPredicate = criteriaBuilder.and(predicateCategory);
+	    
+	     if(postedBy != null && !"".equals(postedBy)) {
+			 Predicate predicatePostedBy = criteriaBuilder.like(rootEntity.get("postBy"),postedBy);
+		     finalPredicate = criteriaBuilder.and(predicatePostedBy);			 
+	       }
+		 
+		 criteriaQuery.where(finalPredicate);
+		 TypedQuery<AdvertiseEntity> query = entityManager.createQuery(criteriaQuery);
+		 List<AdvertiseEntity> advertiseEntityList = query.getResultList();
+		 
+		 return getAdvertiseDtoList(advertiseEntityList);	
+		
+	}
+}
+
 	/*
 	 * String status =
 	 * this.masterDataDelegate.getStatusById(advertiseEntity.getStatus()); String
@@ -245,7 +251,6 @@ public class AdvertiseServiceImpl implements AdvertiseService {
 	 * advertiseEntity.setActive("true");
 	 */
 
-}
 
 // added normal one
 //	@Override

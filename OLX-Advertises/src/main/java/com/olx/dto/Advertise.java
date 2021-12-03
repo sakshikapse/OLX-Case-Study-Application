@@ -28,7 +28,7 @@ public class Advertise {
 	    @ApiModelProperty(value="Created date of your advertisment")
 		private LocalDate createdDate;
 	    
-	    @ApiModelProperty(value="Status of your advertisement")
+	    @ApiModelProperty(value="Active status of your advertisement")
 	    private String active;
 	    
 	    @ApiModelProperty(value="Name of the user who has posted the advertisement")
@@ -36,19 +36,18 @@ public class Advertise {
 	    
 	    @ApiModelProperty(value="Modified date of your advertisment")
 		private LocalDate modifiedDate;		
-	    
-	    // Out of property code  
-	    
+	     
 	   
 	    @ApiModelProperty(value="Status id of your advertisment")
 		private int statusId;	
 	    
-		// @ApiModelProperty(value="Category of your advertisment")
+		@ApiModelProperty(value="Category of your advertisment")
 	    private String category;
 	   	
 	    
 	    @ApiModelProperty(value="Category id of your advertisment")
 	    private int categoryId;
 		
+	    @ApiModelProperty(value="Status of your advertisment")
 	    private String status;	
 }

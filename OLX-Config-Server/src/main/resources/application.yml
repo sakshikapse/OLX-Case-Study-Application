@@ -1,0 +1,13 @@
+server:
+   port: 8888
+  
+spring:  application:    name: configuration-server
+    
+#  cloud:
+#      config:
+#        server:
+#          git:
+#            uri: https://github.com/sakshikapse07/olx-config
+#            default-label: main
+#            username: sakshikapse07
+#            clone-on-start: true
