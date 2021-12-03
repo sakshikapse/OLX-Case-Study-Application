@@ -33,9 +33,12 @@ public class LoginDelegateImpl implements LoginDelegate {
 		// Since we are returning boolean value we are writing Boolean.class
 //		boolean isValidToken = this.restTemplate.getForObject("http://localhost:9000/olx/user/validate/token", Boolean.class);
 //		return isValidToken;
+		
 		HttpEntity entity = new HttpEntity(headers);
 		ResponseEntity<Boolean> result = 
-				this.restTemplate.exchange("http://localhost:9000/olx/user/validate/token", 
+				// http://localhost:9000/olx/user/validate/token
+				// "http://auth-service/olx/user/validate/token",
+				this.restTemplate.exchange("http://API-GATEWAY/olx/user/validate/token", 
 						                    HttpMethod.GET, 
 						                    entity, 
 						                    Boolean.class);

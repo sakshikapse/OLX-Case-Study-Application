@@ -16,21 +16,14 @@ public class MasterDataDelegateImpl implements MasterDataDelegate {
 	@Autowired
 	RestTemplate restTemplate;
 	
-	
-	// Create an object so for that I create a bean
-	// Injecting bean RestTemplate into my IoC container so that it will be used to make a remote call
-	// This bean I can either put in Application class or in delegate interface
-	// Whatever object we are using they have to be registered as a bean into the IoC container
-	/*
-	 * @Bean public RestTemplate getRestTemplate() { return new RestTemplate(); }
-	 */
-	
 	@Override
 	@CircuitBreaker(name="STATUS-FROM-MASTER-DATA-SERVICE",fallbackMethod="fallback")
 	public String getStatusById(int statusId) {		
 		/* Using getForEntity() */
 		 
-		ResponseEntity<String> entityStatusText = this.restTemplate.getForEntity("http://localhost:9001/olx/advertise/status/" + statusId, 
+		ResponseEntity<String> entityStatusText = 
+				// http://masterdata-service/olx/advertise/status/
+				this.restTemplate.getForEntity("http:/masterdata-service/olx/advertise/status/" + statusId, 
 				String.class);	
 		return entityStatusText.getBody();			
 	}
@@ -45,7 +38,9 @@ public class MasterDataDelegateImpl implements MasterDataDelegate {
 	
 	@Override
 	public String getCategoryById(int categoryId) {			 
-		ResponseEntity<String> entityCategoryText = this.restTemplate.getForEntity("http://localhost:9001/olx/advertise/category/" + categoryId, 
+		ResponseEntity<String> entityCategoryText = 
+				// http://masterdata-service/olx/advertise/category/
+				this.restTemplate.getForEntity("http://API-GATEWAY/olx/advertise/category/" + categoryId, 
 				String.class);	
 		return entityCategoryText.getBody();			
 	}

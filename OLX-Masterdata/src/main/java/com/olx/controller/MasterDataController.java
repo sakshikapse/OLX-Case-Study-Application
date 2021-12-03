@@ -20,7 +20,7 @@ import com.olx.service.MasterDataService;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("olx")
+@RequestMapping("/olx/masterdata")
 public class MasterDataController  {
 
 	@Autowired
@@ -34,7 +34,7 @@ public class MasterDataController  {
 	
 	
 	// 5 API - Return all advertisement categories
-	@GetMapping(value="/advertise/category", 
+	@GetMapping(value="/category", 
 			    produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	@ApiOperation(value ="This REST endpoint returns all advertise category")
 	public ResponseEntity <List <Category>> getAllCategories(){
@@ -52,7 +52,7 @@ public class MasterDataController  {
 	
 
 	// 6 API - Return all possible advertise status
-	@GetMapping(value="/advertise/status",
+	@GetMapping(value="/status",
 			    produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	@ApiOperation(value ="This REST endpoint returns all advertise status")
 	public ResponseEntity <List<Status>> getAllStatus(){

@@ -49,6 +49,7 @@ public class UserServiceImpl implements UserService{
 		String username =new  JwtUtil().extractUsername(token);
 		log.info("Extracting the username");
 		System.out.println(username);
+		log.info("Successfully authenticated !!! ");
 		UserEntity userEntity = userRepository.findBySingleUsername(username);
 		
 		//List<User> userDtoList = new ArrayList<User>();

@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-@RequestMapping(value="/olx")
+@RequestMapping(value="/olx/user")
 public class UserController {
 	
 	
@@ -46,7 +46,7 @@ public class UserController {
 	
 	// 1 API - Login as a User
 	@ApiOperation(value="Authenticate user in our olx-application")
-	@PostMapping(value="/user/authenticate",consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value="/authenticate",consumes = MediaType.APPLICATION_JSON_VALUE)
 	// Authenticate function takes argument of authentication request which is a pojo that holds info of username and password
 	// Returns you auth-token of String type
 	public ResponseEntity<String> authenticate(@RequestBody AuthenticationRequest authenticationRequest) {
@@ -64,7 +64,6 @@ public class UserController {
 			return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 		// Login successful .... now return auth-token
-		// For time being I am returning hardcoded auth-token
 		String jwtToken = jwtUtil.generateTokenByUsername(authenticationRequest.getUsername());
 		// return new ResponseEntity("A45B", HttpStatus.OK);
 		return new ResponseEntity(jwtToken, HttpStatus.OK);
@@ -74,7 +73,7 @@ public class UserController {
 	
 	
 	// Validating of the token
-	@GetMapping(value="/user/validate/token")
+	@GetMapping(value="/validate/token")
 	@ApiOperation(value ="This REST endpoint to validate the user by its token")
 	public ResponseEntity<Boolean> isValidateUser(@RequestHeader("Authorization")String authToken) {
 		// Business logic steps
@@ -103,7 +102,7 @@ public class UserController {
 	
 	
 	// 2 API - Logouts a user
-	@DeleteMapping(value="/user/logout")
+	@DeleteMapping(value="/logout")
 	@ApiOperation(value ="This REST endpoint that deletes/logouts the user")
 	public ResponseEntity<Boolean> logout(@RequestHeader("auth-token") String authToken) {
 		return new ResponseEntity<Boolean>(true,HttpStatus.OK);
@@ -112,7 +111,7 @@ public class UserController {
 	
 	
 	// 3 API - Creates a new user 
-	@PostMapping(value="/user",
+	@PostMapping(value="/",
 			consumes= { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, 
 			produces ={ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	@ApiOperation(value ="This REST endpoint creates a user")
@@ -124,11 +123,11 @@ public class UserController {
 	
 	
 	// 4 API - Gets user information based on auth token
-	@GetMapping(value="/user", 
+	@GetMapping(value="/", 
 			    produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	@ApiOperation(value ="This REST endpoint that returns user based on the auth token")
 	public User getUser(@RequestHeader ("auth-token") String authToken){
-		log.info("Getting the user information ... ");
+		log.info("Getting the user information controller... ");
 		System.out.println(authToken);
 		return this.userService.getUser(authToken);
 	}		

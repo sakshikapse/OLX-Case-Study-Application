@@ -16,10 +16,10 @@ spring:
    application:
     name: advertise-service
     
-#eureka:
-#  client:
-#    register-with-eureka: true
-#    fetch-registry: true         
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true         
              
 #management:
 #  endpoints:
