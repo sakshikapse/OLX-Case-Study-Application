@@ -89,7 +89,7 @@ public class AdvertiseController {
 
 	// 12 API
 	@GetMapping(value = "/search/filtercriteria", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-	@ApiOperation(value = "This REST End Point API will give Advertise based on filterCriteria from Database")
+	@ApiOperation(value = "This REST End Point API will give Advertise based on filterCriteria")
 	public ResponseEntity<List<Advertise>> getAdvertiseByFilter(@RequestParam("searchText") String searchText,
 			@RequestParam("category") int category, @RequestParam("postedBy") String postedBy,
 			@RequestParam("dateCondition") String dateCondition, @RequestParam("onDate") LocalDate onDate,
@@ -106,6 +106,7 @@ public class AdvertiseController {
 
 	// 13 API
 	@GetMapping(value = "/search", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+	@ApiOperation(value = "This REST endpoints gives advertisment based on search text")
 	public ResponseEntity<List<Advertise>> getAdvertiseBySearch(@RequestParam("searchText") String searchText) {
 		log.info("Entering into search text controller");
 		List<Advertise> advertises = this.advertiseService.getAdvertiseBySearch(searchText);

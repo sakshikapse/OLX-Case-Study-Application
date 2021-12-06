@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.olx.dto.AuthenticationRequest;
 import com.olx.dto.User;
+import com.olx.entity.BlacklistDocument;
+import com.olx.repository.BlacklistedTokenRepo;
 import com.olx.security.JwtUtil;
 import com.olx.service.UserService;
 
@@ -43,6 +45,9 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+	
+	@Autowired
+	BlacklistedTokenRepo blacklistTokenRepo;
 	
 	// 1 API - Login as a User
 	@ApiOperation(value="Authenticate user in our olx-application")
@@ -104,8 +109,13 @@ public class UserController {
 	// 2 API - Logouts a user
 	@DeleteMapping(value="/logout")
 	@ApiOperation(value ="This REST endpoint that deletes/logouts the user")
-	public ResponseEntity<Boolean> logout(@RequestHeader("auth-token") String authToken) {
-		return new ResponseEntity<Boolean>(true,HttpStatus.OK);
+	public ResponseEntity<String> logout(@RequestHeader("auth-token") String authToken) {
+		String token = authToken.substring(authToken.indexOf(' ') + 1);
+		BlacklistDocument tokendoc = new BlacklistDocument();
+		tokendoc.setToken(token);
+		blacklistTokenRepo.save(tokendoc);
+		return new ResponseEntity<String>("Ohhh yeahh !! Succesfully Logout done ..", HttpStatus.OK);
+		//return new ResponseEntity<Boolean>(true,HttpStatus.OK);
 	}	
 	
 	

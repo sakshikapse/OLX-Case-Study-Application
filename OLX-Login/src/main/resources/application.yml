@@ -15,11 +15,23 @@ spring:
       properties:
           hibernate:
              dialect:org.hibernate.dialect.MySQL8Dialect
-             
 
 
    application:      name: auth-service
+             
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      
+      base-path: /olx-user
+  
+      endpoint:
+         shutdown:
+          enabled: true
 
+        
 eureka:
   client:
     register-with-eureka: true
