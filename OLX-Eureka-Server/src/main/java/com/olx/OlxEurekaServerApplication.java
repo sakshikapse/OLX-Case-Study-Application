@@ -10,6 +10,7 @@ public class OlxEurekaServerApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(OlxEurekaServerApplication.class, args);
+		System.out.println("Hey!! Your Eureka server has been started");
 	}
 
 }

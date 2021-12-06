@@ -10,6 +10,6 @@ public class OlxConfigServerApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(OlxConfigServerApplication.class, args);
+		System.out.println("Config server has been successfully started !!!");
 	}
-
 }

@@ -22,6 +22,7 @@ public class OlxMasterdataApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(OlxMasterdataApplication.class, args);
+		System.out.println("Hey there!! Masterdata is up and running");
 	}
 	
 	

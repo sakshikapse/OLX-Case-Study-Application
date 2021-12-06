@@ -10,6 +10,7 @@ public class OlxApiGatewayApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(OlxApiGatewayApplication.class, args);
+		System.out.println("Hey!! API Gateway is started");
 	}
 
 }
